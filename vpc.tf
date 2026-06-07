@@ -19,18 +19,31 @@ resource "aws_subnet" "ashiq_public_subnet" {
   tags = {
     Name = "ashiq_public_subnet"
   }
+  map_public_ip_on_launch = true
 }
 
-resource "aws_subnet" "ashiq_private_subnet" {
+resource "aws_subnet" "ashiq_private_subnet_a" {
   vpc_id     = aws_vpc.ashiq_vpc.id
   cidr_block = "10.0.1.0/24"
 
   tags = {
-    Name = "ashiq_private_subnet"
+    Name = "ashiq_private_subnet_a"
   }
-  availability_zone = "ap-south-1a"
-  map_public_ip_on_launch = true
+  availability_zone       = "ap-south-1a"
+  map_public_ip_on_launch = false
 }
+
+resource "aws_subnet" "ashiq_private_subnet_b" {
+  vpc_id     = aws_vpc.ashiq_vpc.id
+  cidr_block = "10.0.2.0/24"
+
+  tags = {
+    Name = "ashiq_private_subnet_b"
+  }
+  availability_zone       = "ap-south-1b"
+  map_public_ip_on_launch = false
+}
+
 
 resource "aws_internet_gateway" "ashiq_ig" {
   vpc_id = aws_vpc.ashiq_vpc.id
